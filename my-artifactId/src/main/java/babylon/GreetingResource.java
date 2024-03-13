@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import serialiazer.CustomMsgSerializer;
 import EntityObject.Gift;
 import serialiazer.CustomGiftSerializer;
+import EntityManager.SantaClausService;
 
 
 @Path("/hello")
@@ -27,6 +28,8 @@ public class GreetingResource {
     static ObjectMapper objectMapperGift = new ObjectMapper();
     static SimpleModule moduleGift =
             new SimpleModule("CustomGiftSerializer", new Version(1, 0, 0, null, null, null));
+
+    static SantaClausService santaClausService = new SantaClausService();
 
 
     @GET
@@ -46,10 +49,12 @@ public class GreetingResource {
     // get gift by id
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/gift/{id}")
+    @Path("/gift/{id}/")
     public String getGiftById(@PathParam("id")String id) throws JsonProcessingException {
-        moduleMsg.addSerializer(Gift.class, new CustomGiftSerializer());
-        objectMapperMsg.registerModule(moduleMsg);
-        return objectMapperMsg.writeValueAsString(new Gift());
+        Gift gift = santaClausService.getGiftById(id);
+
+
+        return "{}";
+
     }
 }
