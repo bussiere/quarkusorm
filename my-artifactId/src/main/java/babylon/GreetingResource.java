@@ -51,7 +51,7 @@ public class GreetingResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/gift/{id}/")
     public String getGiftById(@PathParam("id")String id) throws JsonProcessingException {
-        Gift gift = santaClausService.getGiftById(id);
+        Gift gift = santaClausService.getGiftById(Long.parseLong(id));
 
 
         return "{}";
