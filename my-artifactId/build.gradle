@@ -1,13 +1,16 @@
 plugins {
     id 'java'
     id 'io.quarkus'
+    id 'org.kordamp.gradle.jandex' version '1.0.0'
 }
 
 repositories {
     mavenCentral()
     mavenLocal()
 }
-
+tasks.named('quarkusDependenciesBuild') {
+    dependsOn 'jandex'
+}
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-resteasy-reactive'
@@ -18,6 +21,7 @@ dependencies {
     implementation("io.quarkus:quarkus-jdbc-postgresql")
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
+
 }
 
 group 'my-groupId'
@@ -31,6 +35,7 @@ java {
 test {
     systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
 }
+
 compileJava {
     options.encoding = 'UTF-8'
     options.compilerArgs << '-parameters'

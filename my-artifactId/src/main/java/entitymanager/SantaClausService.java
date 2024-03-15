@@ -1,4 +1,4 @@
-package EntityManager;
+package entitymanager;
 
 import EntityObject.Gift;
 // import hibernate ApplicationScoped
@@ -14,6 +14,15 @@ import jakarta.transaction.Transactional;
 public class SantaClausService {
     @Inject
     EntityManager em;
+
+    public SantaClausService(EntityManager em){
+        this.em = em;
+
+    }
+    @Inject
+    public SantaClausService() {
+
+    }
 
     @Transactional
     public void createGift(String giftDescription) {

@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import serialiazer.CustomMsgSerializer;
 import EntityObject.Gift;
-import serialiazer.CustomGiftSerializer;
-import EntityManager.SantaClausService;
+import entitymanager.SantaClausService;
+import jakarta.inject.Inject;
 
 
 @Path("/hello")
@@ -29,7 +29,7 @@ public class GreetingResource {
     static SimpleModule moduleGift =
             new SimpleModule("CustomGiftSerializer", new Version(1, 0, 0, null, null, null));
 
-    static SantaClausService santaClausService = new SantaClausService();
+    @Inject SantaClausService santaClausService;
 
 
     @GET
@@ -54,7 +54,7 @@ public class GreetingResource {
         Gift gift = santaClausService.getGiftById(Long.parseLong(id));
 
 
-        return "{}";
+        return objectMapperGift.writeValueAsString(gift);
 
     }
 }
